@@ -1,0 +1,18 @@
+---
+- name: Install selected packages
+  hosts: all
+  become: true
+  gather_facts: false
+
+  vars_files:
+    - ../vars/packages.yml
+
+  tasks:
+    - name: Install packages
+      ansible.builtin.dnf:
+        name: "{{ packages }}"
+        state: present
+
+    - name: Show installed packages
+      ansible.builtin.debug:
+        msg: "Zainstalowano pakiety: {{ packages | join(', ') }}"
